@@ -1,11 +1,9 @@
 package dev.ellienntatar.commands;
 import org.bukkit.command.*;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Listener;
 
 import dev.ellienntatar.events.ChestInteractEvent;
 import dev.ellienntatar.inventory.ChestSorter;
-import dev.ellienntatar.inventory.SelectionScreen;
 import net.md_5.bungee.api.ChatColor;
 
 public class SortCommand implements CommandExecutor {
