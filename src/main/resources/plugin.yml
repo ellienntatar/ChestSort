@@ -1,0 +1,9 @@
+name: chestsort
+version: 1.0
+author: Ellienn Tatar
+main: dev.ellienntatar.App
+api-version: 1.14
+commands:
+  sort:
+    description: Initiates chest sort
+    usage: /<command>
