@@ -25,7 +25,7 @@ public class ChestSorter {
     public Inventory sort(String sortType) {
         switch (sortType) {
             case "quantity":
-                QuantitySort();
+                quantitySort();
             
             default:
                 break;
@@ -34,7 +34,7 @@ public class ChestSorter {
     }
 
     // TODO: Review efficiency of this... Evan?
-    private void QuantitySort() {
+    private void quantitySort() {
         ItemStack[] contents = inv.getContents();
 
         Map<Material, Integer> materialAmount = new HashMap<>();
