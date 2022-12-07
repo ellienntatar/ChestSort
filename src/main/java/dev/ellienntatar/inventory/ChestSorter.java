@@ -61,7 +61,7 @@ public class ChestSorter {
             }
         });
 
-        ChestUtil.outputContents(inv, sortedList);
+        inv = ChestUtil.outputContents(inv, sortedList);
     }
 
     // checks if specified type is part of enum

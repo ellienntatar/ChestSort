@@ -15,7 +15,7 @@ public class ChestUtil {
         // prevents instantiation
     }
 
-    public static void outputContents(Inventory holderInventory, List<Entry<Material, Integer>> list) {
+    public static Inventory outputContents(Inventory holderInventory, List<Entry<Material, Integer>> list) {
         Inventory sortedInventory = Bukkit.createInventory(holderInventory.getHolder(), InventoryType.CHEST);
         
         for (Entry<Material, Integer> entry : list) {
@@ -32,6 +32,6 @@ public class ChestUtil {
                 }
             }
         }
-        holderInventory = sortedInventory;
+        return sortedInventory;
     }
 }
