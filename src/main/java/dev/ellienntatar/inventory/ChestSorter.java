@@ -64,20 +64,6 @@ public class ChestSorter {
         ChestUtil.outputContents(inv, sortedList);
     }
 
-    private void outputContents(List<Entry<Material, Integer>> list) {
-        Inventory sortedInventory = Bukkit.createInventory(inv.getHolder(), InventoryType.CHEST);
-        for (Entry<Material, Integer> entry : list) {
-            int numItems = entry.getValue();
-            while (numItems > 0) {
-                int currNum = numItems > 64 ? 64 : numItems;
-                sortedInventory.addItem(new ItemStack(entry.getKey(), currNum));
-                numItems -= currNum;
-            }
-        }
-        inv = sortedInventory;
-        System.out.println(Arrays.toString(inv.getContents()));
-    }
-
     // checks if specified type is part of enum
     public static boolean isImplementedSortType(String type) {
         for (SortType enumType : SortType.values()) {
