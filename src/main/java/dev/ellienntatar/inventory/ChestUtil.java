@@ -1,6 +1,10 @@
 package dev.ellienntatar.inventory;
 
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 import java.util.Map.Entry;
 
 import org.bukkit.Bukkit;
@@ -38,6 +42,20 @@ public class ChestUtil {
             }
         }
         return sortedInventory;
+    }
+
+    public static List<Entry<Material, Integer>> sortByQuantity(Set<Entry<Material, Integer>> materialSet) {
+        List<Entry<Material, Integer>> sortedList = new LinkedList<>(materialSet);
+        // Sort the list
+        Collections.sort(sortedList, new Comparator<Entry<Material, Integer> >() {
+            public int compare(Entry<Material, Integer> o1,
+                               Entry<Material, Integer> o2)
+            {
+                return (o2.getValue()).compareTo(o1.getValue());
+            }
+        });
+
+        return sortedList;
     }
 
     // checks if specified type is part of enum
