@@ -30,15 +30,11 @@ public class ChestUtil {
         for (Entry<Material, Integer> entry : list) {
             int numItems = entry.getValue();
             while (numItems > 0) {
-                ItemStack singleStack = new ItemStack(entry.getKey(), 1);
-                if (singleStack.getMaxStackSize() == 1) {
-                    sortedInventory.addItem(singleStack);    
-                    numItems -= 1;
-                } else {
-                    int currNum = numItems > 64 ? 64 : numItems;
+                int maxStackSize = new ItemStack(entry.getKey()).getMaxStackSize();
+
+                int currNum = numItems > maxStackSize ? maxStackSize : numItems;
                     sortedInventory.addItem(new ItemStack(entry.getKey(), currNum));
                     numItems -= currNum;
-                }
             }
         }
         return sortedInventory;
