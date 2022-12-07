@@ -61,8 +61,7 @@ public class ChestSorter {
             }
         });
 
-        outputContents(sortedList);
-
+        ChestUtil.outputContents(inv, sortedList);
     }
 
     private void outputContents(List<Entry<Material, Integer>> list) {
