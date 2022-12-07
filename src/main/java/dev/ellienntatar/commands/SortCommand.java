@@ -3,7 +3,7 @@ import org.bukkit.command.*;
 import org.bukkit.entity.Player;
 
 import dev.ellienntatar.events.ChestInteractEvent;
-import dev.ellienntatar.inventory.ChestSorter;
+import dev.ellienntatar.inventory.ChestUtil;
 import net.md_5.bungee.api.ChatColor;
 
 public class SortCommand implements CommandExecutor {
@@ -31,7 +31,7 @@ public class SortCommand implements CommandExecutor {
             }
 
             String sortType = args[0];
-            if (!ChestSorter.isImplementedSortType(sortType)) {
+            if (!ChestUtil.isImplementedSortType(sortType)) {
                 player.sendMessage(ChatColor.RED + "Invalid sort type specified!");
                 return true;
             }

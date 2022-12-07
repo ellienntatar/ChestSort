@@ -10,6 +10,11 @@ import org.bukkit.inventory.*;
 import org.bukkit.inventory.ItemStack;
 
 public class ChestUtil {
+
+    // TODO: Overkill?
+    public static enum SortType {
+        QUANTITY
+    }
     
     private ChestUtil() {
         // prevents instantiation
@@ -33,5 +38,16 @@ public class ChestUtil {
             }
         }
         return sortedInventory;
+    }
+
+    // checks if specified type is part of enum
+    public static boolean isImplementedSortType(String type) {
+        for (SortType enumType : SortType.values()) {
+            if (enumType.name().equalsIgnoreCase(type)) {
+                return true;
+            }
+        }
+    
+        return false;
     }
 }

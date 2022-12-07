@@ -3,17 +3,10 @@ package dev.ellienntatar.inventory;
 import java.util.*;
 import java.util.Map.Entry;
 
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
-import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.*;
 
 public class ChestSorter {
-    
-    // TODO: Overkill?
-    public static enum SortType {
-        QUANTITY
-    }
 
     private Inventory inv;
 
@@ -64,14 +57,5 @@ public class ChestSorter {
         inv = ChestUtil.outputContents(inv, sortedList);
     }
 
-    // checks if specified type is part of enum
-    public static boolean isImplementedSortType(String type) {
-        for (SortType enumType : SortType.values()) {
-            if (enumType.name().equalsIgnoreCase(type)) {
-                return true;
-            }
-        }
     
-        return false;
-    }
 }
