@@ -26,10 +26,6 @@ public class ChestInteractEvent implements Listener {
                 SortType sortType = playerSortType.get(playerName);
                 Chest clickedChest = (Chest) event.getClickedBlock().getState();
                 Sortable sorter = InventoryUtil.getSorter(sortType, clickedChest.getInventory());
-                // should never happen
-                if (sorter == null) {
-                    return;
-                }
                 clickedChest.getInventory().setContents((sorter.sort().getContents()));
 
                 event.getPlayer().sendMessage(ChatColor.AQUA + "Chest contents have been sorted!");
