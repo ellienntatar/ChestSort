@@ -56,9 +56,7 @@ public class InventoryUtil {
                 continue;
             int itemAmount = item.getAmount();
             ItemModel itemModel = new ItemModel(item.getType(), item.getItemMeta());
-            System.out.println("mat: " + item.getType() + ", hash: " + itemModel.hashCode());
             if (itemModels.containsKey(itemModel)) {
-                System.out.println("Already has mat: " + itemModel.getMaterial());
                 itemModels.put(itemModel, itemModels.get(itemModel) + itemAmount);
             } else {
                 itemModels.put(itemModel, itemAmount);
