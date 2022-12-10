@@ -10,6 +10,7 @@ import org.bukkit.Material;
 import org.bukkit.inventory.*;
 import org.bukkit.inventory.ItemStack;
 
+import dev.ellienntatar.inventory.Sortables.CategorySort;
 import dev.ellienntatar.inventory.Sortables.InvalidSort;
 import dev.ellienntatar.inventory.Sortables.QuantitySort;
 import dev.ellienntatar.inventory.Sortables.Sortable;
@@ -18,7 +19,9 @@ import dev.ellienntatar.pojos.ItemAmount;
 public class InventoryUtil {
 
     public static enum SortType {
-        QUANTITY
+        QUANTITY,
+        QUALITY,
+        CATEGORY
     }
     
     private InventoryUtil() {
@@ -65,6 +68,8 @@ public class InventoryUtil {
         switch (type) {
             case QUANTITY:
                 return new QuantitySort(inventory);
+            case CATEGORY:
+                return new CategorySort(inventory);
             default:
                 return new InvalidSort(inventory); 
         }
