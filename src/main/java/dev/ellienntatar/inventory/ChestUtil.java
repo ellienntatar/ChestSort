@@ -39,20 +39,6 @@ public class ChestUtil {
         return sortedInventory;
     }
 
-    public static List<Entry<Material, Integer>> sortByQuantity(Set<Entry<Material, Integer>> materialSet) {
-        List<Entry<Material, Integer>> sortedList = new LinkedList<>(materialSet);
-        // Sort the list
-        Collections.sort(sortedList, new Comparator<Entry<Material, Integer> >() {
-            public int compare(Entry<Material, Integer> o1,
-                               Entry<Material, Integer> o2)
-            {
-                return (o2.getValue()).compareTo(o1.getValue());
-            }
-        });
-
-        return sortedList;
-    }
-
     // checks if specified type is part of enum
     public static boolean isImplementedSortType(String type) {
         for (SortType enumType : SortType.values()) {
