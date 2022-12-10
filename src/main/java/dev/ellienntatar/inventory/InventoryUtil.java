@@ -3,7 +3,7 @@ package dev.ellienntatar.inventory;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
+
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -13,6 +13,7 @@ import org.bukkit.inventory.ItemStack;
 import dev.ellienntatar.inventory.Sortables.InvalidSort;
 import dev.ellienntatar.inventory.Sortables.QuantitySort;
 import dev.ellienntatar.inventory.Sortables.Sortable;
+import dev.ellienntatar.pojos.ItemAmount;
 
 public class InventoryUtil {
 
@@ -24,16 +25,16 @@ public class InventoryUtil {
         // prevents instantiation
     }
 
-    public static Inventory outputContents(Inventory holderInventory, List<Entry<Material, Integer>> list) {
+    public static Inventory outputContents(Inventory holderInventory, List<ItemAmount> list) {
         Inventory sortedInventory = Bukkit.createInventory(holderInventory.getHolder(), holderInventory.getSize());
         
-        for (Entry<Material, Integer> entry : list) {
-            int numItems = entry.getValue();
+        for (ItemAmount item : list) {
+            int numItems = item.getAmount();
             while (numItems > 0) {
-                int maxStackSize = new ItemStack(entry.getKey()).getMaxStackSize();
+                int maxStackSize = new ItemStack(item.getMaterial()).getMaxStackSize();
 
                 int currNum = numItems > maxStackSize ? maxStackSize : numItems;
-                sortedInventory.addItem(new ItemStack(entry.getKey(), currNum));
+                sortedInventory.addItem(new ItemStack(item.getMaterial(), currNum));
                 numItems -= currNum;
             }
         }
