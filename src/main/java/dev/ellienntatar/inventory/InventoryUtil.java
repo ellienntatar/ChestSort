@@ -8,11 +8,14 @@ import org.bukkit.Material;
 import org.bukkit.inventory.*;
 import org.bukkit.inventory.ItemStack;
 
+import dev.ellienntatar.inventory.Sortables.InvalidSort;
+import dev.ellienntatar.inventory.Sortables.QuantitySort;
+import dev.ellienntatar.inventory.Sortables.Sortable;
+
 public class InventoryUtil {
 
     public static enum SortType {
-        QUANTITY,
-        INVALID
+        QUANTITY
     }
     
     private InventoryUtil() {
@@ -34,13 +37,13 @@ public class InventoryUtil {
         }
         return sortedInventory;
     }
-    
+
     public static Sortable getSorter(SortType type, Inventory inventory) {
         switch (type) {
             case QUANTITY:
                 return new QuantitySort(inventory);
             default:
-                return null; 
+                return new InvalidSort(inventory); 
         }
     }
 
