@@ -1,6 +1,6 @@
 name: chestsort
 version: 1.0
-author: Ellienn Tatar
+author: Ellienn Tatar, Evan Shouse
 main: dev.ellienntatar.App
 api-version: 1.14
 commands:
