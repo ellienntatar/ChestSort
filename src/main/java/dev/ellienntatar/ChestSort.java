@@ -5,7 +5,7 @@ import dev.ellienntatar.commands.SortCommandCompleter;
 import dev.ellienntatar.commands.SortCommand;
 import dev.ellienntatar.events.ChestInteractEvent;
 
-public class App extends JavaPlugin {
+public class ChestSort extends JavaPlugin {
     @Override
     public void onEnable() {
         // implemented commands
