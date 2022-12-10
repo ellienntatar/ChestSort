@@ -8,7 +8,10 @@ import org.bukkit.ChatColor;
 import org.bukkit.block.BlockState;
 import org.bukkit.block.Chest;
 import org.bukkit.block.ShulkerBox;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.minecart.StorageMinecart;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.Inventory;
 
@@ -48,6 +51,29 @@ public class ChestInteractEvent implements Listener {
             } else {
                 // player clicked non chest block
                 event.getPlayer().sendMessage(ChatColor.RED + "Non-chest block clicked, sort mode disabled.");
+            }
+
+            hasToggledSort.remove(playerName);
+        }
+    }
+
+    @EventHandler
+    public void onPlayerEntityInteract(PlayerInteractEntityEvent event) {
+        String playerName = event.getPlayer().getName();
+        if (hasToggledSort.containsKey(playerName)) { 
+            Entity clickedEntity = event.getRightClicked();
+            SortType sortType = playerSortType.get(playerName);
+            // minecart click
+            if (clickedEntity instanceof StorageMinecart) {
+                StorageMinecart clickedMinecart = (StorageMinecart) clickedEntity;
+                Inventory minecartInventory = clickedMinecart.getInventory();
+                Sortable sorter = InventoryUtil.getSorter(sortType, minecartInventory);
+                minecartInventory.setContents(sorter.sort().getContents());
+
+                event.getPlayer().sendMessage(ChatColor.AQUA + "Minecart contents have been sorted!");
+            } else {
+                // player clicked non chest block
+                event.getPlayer().sendMessage(ChatColor.RED + "Non-chest entity clicked, sort mode disabled.");
             }
 
             hasToggledSort.remove(playerName);
