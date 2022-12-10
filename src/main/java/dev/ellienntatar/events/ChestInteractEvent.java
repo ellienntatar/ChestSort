@@ -10,8 +10,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerInteractEvent;
 
 import dev.ellienntatar.inventory.InventoryUtil;
-import dev.ellienntatar.inventory.Sortable;
 import dev.ellienntatar.inventory.InventoryUtil.SortType;
+import dev.ellienntatar.inventory.Sortables.Sortable;
 
 public class ChestInteractEvent implements Listener {
 

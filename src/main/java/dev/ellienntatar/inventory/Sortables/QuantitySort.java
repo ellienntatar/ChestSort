@@ -1,4 +1,4 @@
-package dev.ellienntatar.inventory;
+package dev.ellienntatar.inventory.Sortables;
 
 import java.util.*;
 import java.util.Map.Entry;
@@ -6,6 +6,8 @@ import java.util.Map.Entry;
 import org.bukkit.Material;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+
+import dev.ellienntatar.inventory.InventoryUtil;
 
 public class QuantitySort implements Sortable {
     private Inventory inv;

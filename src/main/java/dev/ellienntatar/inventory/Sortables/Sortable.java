@@ -1,4 +1,4 @@
-package dev.ellienntatar.inventory;
+package dev.ellienntatar.inventory.Sortables;
 
 import org.bukkit.inventory.*;
 
