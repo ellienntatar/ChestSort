@@ -46,15 +46,4 @@ public class InventoryUtil {
                 return new InvalidSort(inventory); 
         }
     }
-
-    // checks if specified type is part of enum
-    public static boolean isImplementedSortType(String type) {
-        for (SortType enumType : SortType.values()) {
-            if (enumType.name().equalsIgnoreCase(type)) {
-                return true;
-            }
-        }
-    
-        return false;
-    }
 }
