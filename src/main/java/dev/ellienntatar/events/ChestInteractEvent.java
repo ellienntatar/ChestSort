@@ -9,24 +9,31 @@ import org.bukkit.block.Chest;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerInteractEvent;
 
-import dev.ellienntatar.inventory.ChestSorter;
+import dev.ellienntatar.inventory.InventoryUtil;
+import dev.ellienntatar.inventory.Sortable;
+import dev.ellienntatar.inventory.InventoryUtil.SortType;
 
 public class ChestInteractEvent implements Listener {
 
     Map<String, Boolean> hasToggledSort = new HashMap<>();
-    Map<String, String> playerSortType = new HashMap<>();
+    Map<String, SortType> playerSortType = new HashMap<>();
 
     @EventHandler
     public void onPlayerInteract(PlayerInteractEvent event) {
         String playerName = event.getPlayer().getName();
         if (hasToggledSort.containsKey(playerName)) {
-            String sortType = playerSortType.get(playerName);
             if (event.getClickedBlock().getState() instanceof Chest) {
+                SortType sortType = playerSortType.get(playerName);
                 Chest clickedChest = (Chest) event.getClickedBlock().getState();
-                ChestSorter sorter = new ChestSorter(clickedChest.getInventory());
-                clickedChest.getInventory().setContents((sorter.sort(sortType).getContents()));
+                Sortable sorter = InventoryUtil.getSorter(sortType, clickedChest.getInventory());
+                // should never happen
+                if (sorter == null) {
+                    return;
+                }
+                clickedChest.getInventory().setContents((sorter.sort().getContents()));
 
                 event.getPlayer().sendMessage(ChatColor.AQUA + "Chest contents have been sorted!");
+
             } else {
                 // player clicked non chest block
                 event.getPlayer().sendMessage(ChatColor.RED + "Non-chest block clicked, sort mode disabled.");
@@ -36,7 +43,7 @@ public class ChestInteractEvent implements Listener {
         }
     }
 
-    public void addPlayer(String name, String type) {
+    public void addPlayer(String name, SortType type) {
         hasToggledSort.put(name, true);
         playerSortType.put(name, type);
     }

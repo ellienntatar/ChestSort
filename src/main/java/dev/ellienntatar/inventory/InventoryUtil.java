@@ -1,10 +1,6 @@
 package dev.ellienntatar.inventory;
 
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Set;
 import java.util.Map.Entry;
 
 import org.bukkit.Bukkit;
@@ -12,14 +8,14 @@ import org.bukkit.Material;
 import org.bukkit.inventory.*;
 import org.bukkit.inventory.ItemStack;
 
-public class ChestUtil {
+public class InventoryUtil {
 
-    // TODO: Overkill?
     public static enum SortType {
-        QUANTITY
+        QUANTITY,
+        INVALID
     }
     
-    private ChestUtil() {
+    private InventoryUtil() {
         // prevents instantiation
     }
 
@@ -37,6 +33,15 @@ public class ChestUtil {
             }
         }
         return sortedInventory;
+    }
+    
+    public static Sortable getSorter(SortType type, Inventory inventory) {
+        switch (type) {
+            case QUANTITY:
+                return new QuantitySort(inventory);
+            default:
+                return null; 
+        }
     }
 
     // checks if specified type is part of enum

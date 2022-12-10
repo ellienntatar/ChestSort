@@ -3,7 +3,8 @@ import org.bukkit.command.*;
 import org.bukkit.entity.Player;
 
 import dev.ellienntatar.events.ChestInteractEvent;
-import dev.ellienntatar.inventory.ChestUtil;
+import dev.ellienntatar.inventory.InventoryUtil;
+import dev.ellienntatar.inventory.InventoryUtil.SortType;
 import net.md_5.bungee.api.ChatColor;
 
 public class SortCommand implements CommandExecutor {
@@ -29,15 +30,16 @@ public class SortCommand implements CommandExecutor {
                 player.sendMessage(ChatColor.RED + "Sort type not specified! Usage: /sort <TYPE>");
                 return true;
             }
-
             String sortType = args[0];
-            if (!ChestUtil.isImplementedSortType(sortType)) {
-                player.sendMessage(ChatColor.RED + "Invalid sort type specified!");
+            try {
+                // see if it's frickin' valid!
+                SortType parsedSort = SortType.valueOf(sortType.toUpperCase());
+                chestInteractEvent.addPlayer(player.getName(), parsedSort);
+                player.sendMessage(ChatColor.AQUA + "Sort mode activated! Sort type: " + ChatColor.WHITE + sortType + ChatColor.AQUA + " | Click on the chest you would like sorted");
+            } catch (IllegalArgumentException e) {
+                player.sendMessage(ChatColor.RED + "Invalid sort type \"" + sortType + "\" specified.");
                 return true;
             }
-
-            chestInteractEvent.addPlayer(player.getName(), sortType);
-            player.sendMessage(ChatColor.AQUA + "Sort mode activated! Sort type: " + ChatColor.WHITE + sortType + ChatColor.AQUA + " | Click on the chest you would like sorted");
         }
 
 

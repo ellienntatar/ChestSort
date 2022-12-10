@@ -4,30 +4,17 @@ import java.util.*;
 import java.util.Map.Entry;
 
 import org.bukkit.Material;
-import org.bukkit.inventory.*;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
 
-public class ChestSorter {
-
+public class QuantitySort implements Sortable {
     private Inventory inv;
 
-    public ChestSorter(Inventory inv) {
+    public QuantitySort(Inventory inv) {
         this.inv = inv;
     }
 
-
-    public Inventory sort(String sortType) {
-        switch (sortType) {
-            case "quantity":
-                quantitySort();
-            
-            default:
-                break;
-        }
-        return inv;
-    }
-
-    // TODO: Review efficiency of this... Evan?
-    private void quantitySort() {
+    public Inventory sort() {
         ItemStack[] contents = inv.getContents();
 
         Map<Material, Integer> materialAmount = new HashMap<>();
@@ -54,8 +41,8 @@ public class ChestSorter {
             }
         });
 
-        inv = ChestUtil.outputContents(inv, sortedList);
-    }
+        inv = InventoryUtil.outputContents(inv, sortedList);
 
-    
+        return inv;
+    }
 }
