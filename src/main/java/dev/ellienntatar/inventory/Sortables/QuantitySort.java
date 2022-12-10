@@ -25,9 +25,7 @@ public class QuantitySort implements Sortable {
             itemsList.add(currItem);
         }
         // Sort the list
-        Collections.sort(itemsList, new Comparator<ItemAmount>() {
-            public int compare(ItemAmount o1, ItemAmount o2) { return o2.compareTo(o1); }
-        });
+        Collections.sort(itemsList, Collections.reverseOrder());
 
         inv = InventoryUtil.outputContents(inv, itemsList);
 
