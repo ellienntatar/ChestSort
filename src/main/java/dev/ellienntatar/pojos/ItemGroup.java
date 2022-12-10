@@ -1,18 +1,11 @@
 package dev.ellienntatar.pojos;
 
-import org.bukkit.Material;
-
-public class ItemAmount implements Comparable<ItemAmount> {
-    private Material material;
+public class ItemGroup implements Comparable<ItemGroup> {
+    private ItemModel item;
     private int amount;
 
-    public ItemAmount(Material material) {
-        this.material = material;
-        amount = 0;
-    }
-
-    public ItemAmount(Material material, int amount) {
-        this.material = material;
+    public ItemGroup(ItemModel item, int amount) {
+        this.item = item;
         this.amount = amount;
     }
 
@@ -20,8 +13,8 @@ public class ItemAmount implements Comparable<ItemAmount> {
         return amount;
     }
 
-    public Material getMaterial() {
-        return material;
+    public ItemModel getItemModel() {
+        return item;
     }
 
     public void add(int amount) {
@@ -29,7 +22,7 @@ public class ItemAmount implements Comparable<ItemAmount> {
     }
 
     @Override
-    public int compareTo(ItemAmount item) {
+    public int compareTo(ItemGroup item) {
         int otherValue = item.getAmount();
         if (amount > otherValue) 
             return 1;

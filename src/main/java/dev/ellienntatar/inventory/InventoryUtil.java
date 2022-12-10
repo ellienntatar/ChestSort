@@ -1,12 +1,11 @@
 package dev.ellienntatar.inventory;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
 import org.bukkit.Bukkit;
-import org.bukkit.Material;
 import org.bukkit.inventory.*;
 import org.bukkit.inventory.ItemStack;
 
@@ -14,7 +13,8 @@ import dev.ellienntatar.inventory.Sortables.CategorySort;
 import dev.ellienntatar.inventory.Sortables.InvalidSort;
 import dev.ellienntatar.inventory.Sortables.QuantitySort;
 import dev.ellienntatar.inventory.Sortables.Sortable;
-import dev.ellienntatar.pojos.ItemAmount;
+import dev.ellienntatar.pojos.ItemGroup;
+import dev.ellienntatar.pojos.ItemModel;
 
 public class InventoryUtil {
 
@@ -28,40 +28,50 @@ public class InventoryUtil {
         // prevents instantiation
     }
 
-    public static Inventory outputContents(Inventory holderInventory, List<ItemAmount> list) {
+    public static Inventory outputContents(Inventory holderInventory, List<ItemGroup> list) {
         Inventory sortedInventory = Bukkit.createInventory(holderInventory.getHolder(), holderInventory.getSize());
         
-        for (ItemAmount item : list) {
+        for (ItemGroup item : list) {
             int numItems = item.getAmount();
             while (numItems > 0) {
-                int maxStackSize = new ItemStack(item.getMaterial()).getMaxStackSize();
+                ItemModel itemModel = item.getItemModel();
+                int maxStackSize = new ItemStack(itemModel.getMaterial()).getMaxStackSize();
 
                 int currNum = numItems > maxStackSize ? maxStackSize : numItems;
-                sortedInventory.addItem(new ItemStack(item.getMaterial(), currNum));
+                ItemStack itemStack = new ItemStack(itemModel.getMaterial(), currNum);
+                itemStack.setItemMeta(itemModel.getItemMeta());
+                sortedInventory.addItem(itemStack);
                 numItems -= currNum;
             }
         }
         return sortedInventory;
     }
 
-    public static Map<Material, Integer> getMaterialCountMap(Inventory inv) {
+    public static List<ItemGroup> getItemGroupList(Inventory inv) {
         ItemStack[] contents = inv.getContents();
-
-        Map<Material, Integer> materialAmount = new HashMap<>();
+    
+        Map<ItemModel, Integer> itemModels = new HashMap<>();
         for (ItemStack item : contents) {
             if (item == null)
                 continue;
-
-            Material currItemType = item.getType();
             int itemAmount = item.getAmount();
-            if (materialAmount.containsKey(currItemType)) {
-                materialAmount.put(currItemType, materialAmount.get(currItemType) + itemAmount);
+            ItemModel itemModel = new ItemModel(item.getType(), item.getItemMeta());
+            System.out.println("mat: " + item.getType() + ", hash: " + itemModel.hashCode());
+            if (itemModels.containsKey(itemModel)) {
+                System.out.println("Already has mat: " + itemModel.getMaterial());
+                itemModels.put(itemModel, itemModels.get(itemModel) + itemAmount);
             } else {
-                materialAmount.put(currItemType, itemAmount);
+                itemModels.put(itemModel, itemAmount);
             }
         }
 
-        return materialAmount;
+        List<ItemGroup> groupList = new ArrayList<>();
+        for (var entry : itemModels.entrySet()) {
+            ItemGroup itemGroup = new ItemGroup(entry.getKey(), entry.getValue());
+            groupList.add(itemGroup);
+        }
+
+        return groupList;
     }
 
     public static Sortable getSorter(SortType type, Inventory inventory) {

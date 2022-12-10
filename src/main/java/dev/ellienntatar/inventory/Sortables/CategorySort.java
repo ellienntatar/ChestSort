@@ -6,17 +6,17 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.bukkit.Material;
 import org.bukkit.inventory.CreativeCategory;
 import org.bukkit.inventory.Inventory;
 
 import dev.ellienntatar.inventory.InventoryUtil;
-import dev.ellienntatar.pojos.ItemAmount;
+import dev.ellienntatar.pojos.ItemGroup;
+import dev.ellienntatar.pojos.ItemModel;
 
 public class CategorySort implements Sortable {
     
     private Inventory inv;
-    private Map<CreativeCategory, List<ItemAmount>> categoriesToItems = new LinkedHashMap<>();
+    private Map<CreativeCategory, List<ItemGroup>> categoriesToItems = new LinkedHashMap<>();
 
     public CategorySort(Inventory inv) {
         this.inv = inv;
@@ -36,20 +36,20 @@ public class CategorySort implements Sortable {
     }
     
     public Inventory sort() {
-        Map<Material, Integer> materialAmount = InventoryUtil.getMaterialCountMap(inv);
+        List<ItemGroup> itemGroupList = InventoryUtil.getItemGroupList(inv);
 
         // get all items into respective category lists
-        for (var entry : materialAmount.entrySet()) {
-            CreativeCategory itemCategory = entry.getKey().getCreativeCategory();
+        for (ItemGroup itemGroup : itemGroupList) {
+            ItemModel itemModel = itemGroup.getItemModel();
+            CreativeCategory itemCategory = itemModel.getMaterial().getCreativeCategory();
             // should never happen
             if (!categoriesToItems.containsKey(itemCategory))
                 continue;
 
-            ItemAmount item = new ItemAmount(entry.getKey(), entry.getValue());
-            categoriesToItems.get(itemCategory).add(item);
+            categoriesToItems.get(itemCategory).add(itemGroup);
         }
         // sort each list by quantity
-        List<ItemAmount> sortedCategoryList = new ArrayList<>();
+        List<ItemGroup> sortedCategoryList = new ArrayList<>();
         for (var list : categoriesToItems.values()) {
             // Sort the list
             Collections.sort(list, Collections.reverseOrder());

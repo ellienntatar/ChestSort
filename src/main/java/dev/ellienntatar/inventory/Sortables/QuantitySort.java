@@ -1,13 +1,11 @@
 package dev.ellienntatar.inventory.Sortables;
 
 import java.util.*;
-import java.util.Map.Entry;
 
-import org.bukkit.Material;
 import org.bukkit.inventory.Inventory;
 
 import dev.ellienntatar.inventory.InventoryUtil;
-import dev.ellienntatar.pojos.ItemAmount;
+import dev.ellienntatar.pojos.ItemGroup;
 
 public class QuantitySort implements Sortable {
     private Inventory inv;
@@ -17,17 +15,12 @@ public class QuantitySort implements Sortable {
     }
 
     public Inventory sort() {
-        Map<Material, Integer> materialAmount = InventoryUtil.getMaterialCountMap(inv);
+        List<ItemGroup> itemGroupList = InventoryUtil.getItemGroupList(inv);
 
-        List<ItemAmount> itemsList = new ArrayList<>();
-        for (Entry<Material, Integer> entry : materialAmount.entrySet()) {
-            ItemAmount currItem = new ItemAmount(entry.getKey(), entry.getValue());
-            itemsList.add(currItem);
-        }
         // Sort the list
-        Collections.sort(itemsList, Collections.reverseOrder());
+        Collections.sort(itemGroupList, Collections.reverseOrder());
 
-        inv = InventoryUtil.outputContents(inv, itemsList);
+        inv = InventoryUtil.outputContents(inv, itemGroupList);
 
         return inv;
     }
