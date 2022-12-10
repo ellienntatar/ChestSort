@@ -17,21 +17,7 @@ public class QuantitySort implements Sortable {
     }
 
     public Inventory sort() {
-        ItemStack[] contents = inv.getContents();
-
-        Map<Material, Integer> materialAmount = new HashMap<>();
-        for (ItemStack item : contents) {
-            if (item == null)
-                continue;
-
-            Material currItemType = item.getType();
-            int itemAmount = item.getAmount();
-            if (materialAmount.containsKey(currItemType)) {
-                materialAmount.put(currItemType, materialAmount.get(currItemType) + itemAmount);
-            } else {
-                materialAmount.put(currItemType, itemAmount);
-            }
-        }
+        Map<Material, Integer> materialAmount = InventoryUtil.getMaterialCountMap(inv);
 
         List<Entry<Material, Integer>> sortedList = new LinkedList<>(materialAmount.entrySet());
         // Sort the list

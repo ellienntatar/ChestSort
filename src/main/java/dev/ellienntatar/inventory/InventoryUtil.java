@@ -38,6 +38,26 @@ public class InventoryUtil {
         return sortedInventory;
     }
 
+    public static Map<Material, Integer> getMaterialCountMap(Inventory inv) {
+        ItemStack[] contents = inv.getContents();
+
+        Map<Material, Integer> materialAmount = new HashMap<>();
+        for (ItemStack item : contents) {
+            if (item == null)
+                continue;
+
+            Material currItemType = item.getType();
+            int itemAmount = item.getAmount();
+            if (materialAmount.containsKey(currItemType)) {
+                materialAmount.put(currItemType, materialAmount.get(currItemType) + itemAmount);
+            } else {
+                materialAmount.put(currItemType, itemAmount);
+            }
+        }
+
+        return materialAmount;
+    }
+
     public static Sortable getSorter(SortType type, Inventory inventory) {
         switch (type) {
             case QUANTITY:
