@@ -6,7 +6,6 @@ import java.util.*;
 
 import org.bukkit.ChatColor;
 import org.bukkit.block.Chest;
-import org.bukkit.block.DoubleChest;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerInteractEvent;
 
@@ -18,24 +17,19 @@ public class ChestInteractEvent implements Listener {
     Map<String, String> playerSortType = new HashMap<>();
 
     @EventHandler
-    public void onPlayerInteract(PlayerInteractEvent e) {
-        String playerName = e.getPlayer().getName();
+    public void onPlayerInteract(PlayerInteractEvent event) {
+        String playerName = event.getPlayer().getName();
         if (hasToggledSort.containsKey(playerName)) {
-
-            if (e.getClickedBlock().getState() instanceof Chest) {
-                String sortType = playerSortType.get(playerName);
-                Chest clickedChest = (Chest) e.getClickedBlock().getState();
+            String sortType = playerSortType.get(playerName);
+            if (event.getClickedBlock().getState() instanceof Chest) {
+                Chest clickedChest = (Chest) event.getClickedBlock().getState();
                 ChestSorter sorter = new ChestSorter(clickedChest.getInventory());
+                clickedChest.getInventory().setContents((sorter.sort(sortType).getContents()));
 
-
-                clickedChest.getBlockInventory().setContents((sorter.sort(sortType).getContents()));
-
-                e.getPlayer().sendMessage(ChatColor.AQUA + "Chest contents have been sorted!");
-            } else if (e.getClickedBlock().getState() instanceof DoubleChest) {
-                // TODO: Figure out double chest sorting (hard!)
+                event.getPlayer().sendMessage(ChatColor.AQUA + "Chest contents have been sorted!");
             } else {
                 // player clicked non chest block
-                e.getPlayer().sendMessage(ChatColor.RED + "Non-chest block clicked, sort mode disabled.");
+                event.getPlayer().sendMessage(ChatColor.RED + "Non-chest block clicked, sort mode disabled.");
             }
 
             hasToggledSort.remove(playerName);

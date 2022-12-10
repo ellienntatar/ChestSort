@@ -9,7 +9,6 @@ import java.util.Map.Entry;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
-import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.*;
 import org.bukkit.inventory.ItemStack;
 
@@ -25,7 +24,7 @@ public class ChestUtil {
     }
 
     public static Inventory outputContents(Inventory holderInventory, List<Entry<Material, Integer>> list) {
-        Inventory sortedInventory = Bukkit.createInventory(holderInventory.getHolder(), InventoryType.CHEST);
+        Inventory sortedInventory = Bukkit.createInventory(holderInventory.getHolder(), holderInventory.getSize());
         
         for (Entry<Material, Integer> entry : list) {
             int numItems = entry.getValue();
@@ -33,8 +32,8 @@ public class ChestUtil {
                 int maxStackSize = new ItemStack(entry.getKey()).getMaxStackSize();
 
                 int currNum = numItems > maxStackSize ? maxStackSize : numItems;
-                    sortedInventory.addItem(new ItemStack(entry.getKey(), currNum));
-                    numItems -= currNum;
+                sortedInventory.addItem(new ItemStack(entry.getKey(), currNum));
+                numItems -= currNum;
             }
         }
         return sortedInventory;
