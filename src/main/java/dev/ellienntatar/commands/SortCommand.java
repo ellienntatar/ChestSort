@@ -3,7 +3,6 @@ import org.bukkit.command.*;
 import org.bukkit.entity.Player;
 
 import dev.ellienntatar.events.ChestInteractEvent;
-import dev.ellienntatar.inventory.InventoryUtil;
 import dev.ellienntatar.inventory.InventoryUtil.SortType;
 import net.md_5.bungee.api.ChatColor;
 
