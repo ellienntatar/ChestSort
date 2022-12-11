@@ -5,5 +5,13 @@ main: dev.ellienntatar.ChestSort
 api-version: 1.14
 commands:
   sort:
-    description: Initiates chest sort
+    description: Initiates chest/inventory sort
+    usage: /<command>
+    permission: chestsort.sort
+    permission-message: You don't have access to chestsort.sort!
+  sort quantity:
+    description: Sorts chest/inventory by number of items in descending order
+    usage: /<command>
+  sort category:
+    description: Sorts chest/inventory by creative menu categories. 
     usage: /<command>
