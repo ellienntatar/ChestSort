@@ -1,5 +1,5 @@
 name: chestsort
-version: 1.0
+version: 1.19.2
 author: Ellienn Tatar, Evan Shouse
 main: dev.ellienntatar.ChestSort
 api-version: 1.14
