@@ -42,6 +42,10 @@ public class CategorySort implements Sortable {
         for (ItemGroup itemGroup : itemGroupList) {
             ItemModel itemModel = itemGroup.getItemModel();
             CreativeCategory itemCategory = itemModel.getMaterial().getCreativeCategory();
+            // any item that is not under a creative category will be put into MISC
+            if (itemCategory == null) {
+                itemCategory = CreativeCategory.MISC;
+            } 
             // should never happen
             if (!categoriesToItems.containsKey(itemCategory))
                 continue;
